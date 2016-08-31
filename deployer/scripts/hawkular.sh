@@ -198,16 +198,16 @@ EOF
     echo "Setting up Cassandra with Persistent Storage"
 
     if [ "$hostpath_storage" != "" ]; then
-        echo "Setting up Cassandra with Persistent Storage via hostPath at $hostpath_storage"
+      
+      echo "Setting up Cassandra with Persistent Storage via hostPath at $hostpath_storage"
 
-        # Deploy the main 'master' Cassandra node
-        oc process hawkular-cassandra-node-hostpath -v "IMAGE_PREFIX=$image_prefix,IMAGE_VERSION=$image_version,HOST_PATH=$hostpath_storage,NODE=1,MASTER=true" | oc create -f - || true
-        # Deploy any subsequent Cassandra nodes
-        for i in $(seq 2 $cassandra_nodes);
-        do
-          oc process hawkular-cassandra-node-hostpath -v "IMAGE_PREFIX=$image_prefix,IMAGE_VERSION=$image_version,HOST_PATH=$hostpath_storage,NODE=$i" | oc create -f - || true
-        done
-      fi
+      # Deploy the main 'master' Cassandra node
+      oc process hawkular-cassandra-node-hostpath -v "IMAGE_PREFIX=$image_prefix,IMAGE_VERSION=$image_version,HOST_PATH=$hostpath_storage,NODE=1,MASTER=true" | oc create -f - || true
+      # Deploy any subsequent Cassandra nodes
+      for i in $(seq 2 $cassandra_nodes);
+      do
+        oc process hawkular-cassandra-node-hostpath -v "IMAGE_PREFIX=$image_prefix,IMAGE_VERSION=$image_version,HOST_PATH=$hostpath_storage,NODE=$i" | oc create -f - || true
+      done
 
     else
       
@@ -222,7 +222,8 @@ EOF
       done
     fi
 
-  else 
+  else
+
     echo "Setting up Cassandra with Non Persistent Storage"
     oc process hawkular-cassandra-node-emptydir -v "IMAGE_PREFIX=$image_prefix,IMAGE_VERSION=$image_version,NODE=1,MASTER=true" | oc create -f -  
     for i in $(seq 2 $cassandra_nodes);
