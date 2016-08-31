@@ -201,6 +201,8 @@ EOF
       
       echo "Setting up Cassandra with Persistent Storage via hostPath at $hostpath_storage"
 
+      oc adm policy add-scc-to-user privileged -z cassandra
+
       # Deploy the main 'master' Cassandra node
       oc process hawkular-cassandra-node-hostpath -v "IMAGE_PREFIX=$image_prefix,IMAGE_VERSION=$image_version,HOST_PATH=$hostpath_storage,NODE=1,MASTER=true" | oc create -f - || true
       # Deploy any subsequent Cassandra nodes
