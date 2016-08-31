@@ -35,7 +35,7 @@ objects:
     generateName: metrics-deployer-
   spec:
     containers:
-    - image: ${IMAGE_PREFIX}metrics-deployer:${IMAGE_VERSION}
+    - image: ${DEPLOYER_IMAGE_PREFIX}metrics-deployer:${DEPLOYER_IMAGE_VERSION}
       name: deployer
       volumeMounts:
       - name: secret
@@ -74,6 +74,8 @@ objects:
           value: ${HEAPSTER_NODE_ID}
         - name: METRIC_RESOLUTION
           value: ${METRIC_RESOLUTION}
+        - name: HOST_PATH
+          value: ${HOST_PATH}
     dnsPolicy: ClusterFirst
     restartPolicy: Never
     serviceAccount: metrics-deployer
@@ -84,6 +86,14 @@ objects:
       secret:
         secretName: metrics-deployer
 parameters:
+-
+  description: 'Specify prefix for metrics components; e.g. for "openshift/origin-metrics-deployer:latest", set prefix "openshift/origin-"'
+  name: DEPLOYER_IMAGE_PREFIX
+  value: "openshift/origin-"
+-
+  description: 'Specify version for metrics components; e.g. for "openshift/origin-metrics-deployer:latest", set version "latest"'
+  name: DEPLOYER_IMAGE_VERSION
+  value: "latest"
 -
   description: 'Specify prefix for metrics components; e.g. for "openshift/origin-metrics-deployer:latest", set prefix "openshift/origin-"'
   name: IMAGE_PREFIX
@@ -136,3 +146,7 @@ parameters:
   description: "How often metrics should be gathered. Defaults value of '10s' for 10 seconds"
   name: METRIC_RESOLUTION
   value: "10s"
+-
+  description: "The path on the host for hostPath volumes"
+  name: HOST_PATH
+  required: true

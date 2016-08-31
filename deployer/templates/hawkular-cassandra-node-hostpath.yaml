@@ -27,13 +27,9 @@ parameters:
 - description: The node number for the Cassandra cluster.
   name: NODE
   required: true
-
-
-- description: The path on the host for the hostPath volume
+- description: The path on the host for the hostPath volume; e.g. for example /media/cassandra
   name: HOST_PATH
   required: true
-  value: '/media/hawkular-cassandra'
-
 objects:
 - apiVersion: v1
   kind: ReplicationController
