@@ -232,5 +232,6 @@ EOF
     do
       oc process hawkular-cassandra-node-emptydir -v "IMAGE_PREFIX=$image_prefix,IMAGE_VERSION=$image_version,NODE=$i" | oc create -f -
     done
+    
   fi
 }
